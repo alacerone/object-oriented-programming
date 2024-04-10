@@ -1,0 +1,53 @@
+import 'dart:io';
+
+// Interface
+abstract class Animal {
+  void makeSound();
+}
+
+// Base class
+class AnimalBase implements Animal {
+  @override
+  void makeSound() {
+    print('Generic animal sound');
+  }
+}
+
+// Subclass
+class Dog extends AnimalBase {
+  @override
+  void makeSound() {
+    print('Woof!');
+  }
+}
+
+// Class initialized with data from a file
+class Zoo {
+  List<Animal> animals = [];
+
+  Zoo(String filename) {
+    File file = File(filename);
+    List<String> lines = file.readAsLinesSync();
+    for (String line in lines) {
+      if (line == 'dog') {
+        animals.add(Dog());
+      }
+      // Add more conditions for other types of animals
+    }
+  }
+}
+
+// Method that demonstrates the use of a loop
+void printAnimals(Iterable<Animal> animals) {
+  for (Animal animal in animals) {
+    animal.makeSound();
+  }
+}
+
+void main() {
+  // Create an instance of Zoo initialized with data from a file
+  Zoo zoo = Zoo('animals.txt');
+
+  // Demonstrate the use of a loop
+  printAnimals(zoo.animals);
+}
